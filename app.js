@@ -53,7 +53,7 @@ function bellTime(s) {
 }
 function render() {
   $('#app').innerHTML = `
-    <header class="site-header"><a class="brand" href="./" aria-label="ひとこと事件簿 ホーム"><img src="./icon.svg" width="42" height="42" alt=""><span>ひとこと事件簿<small>MY LITTLE WORK NOTEBOOK</small></span></a>
+    <header class="site-header"><a class="brand" href="./" aria-label="ひとこと事件簿 ホーム"><img class="mascot-ghost" src="./ghost-mascot.webp" width="42" height="42" alt=""><span>ひとこと事件簿<small>MY LITTLE WORK NOTEBOOK</small></span></a>
     <span class="save-state ${cloudError ? 'has-error' : ''}">${icon(user ? 'cloud' : 'book')}<span>${user ? cloudError ? '接続を確認してください' : 'クラウド保存' : 'この端末に保存'}</span></span></header>
     <main class="page ${view}">${view === 'calendar' ? calendarPage() : view === 'history' ? historyPage() : settingsPage()}</main>
     <nav class="bottom-nav" aria-label="メインメニュー">${[['calendar','calendar','カレンダー'],['history','book','事件簿'],['settings','settings','設定']].map(([id,i,label]) => `<button data-action="view" data-view="${id}" class="nav-item ${id===view?'active':''}" ${id===view?'aria-current="page"':''}>${icon(i)}<span>${label}</span></button>`).join('')}</nav>`;
@@ -64,7 +64,7 @@ function calendarPage() {
   const year = cursor.getFullYear(), month = cursor.getMonth();
   const monthKey = `${year}-${String(month+1).padStart(2,'0')}`;
   const monthCount = data.incidents.filter(x => x.date.startsWith(monthKey)).length;
-  return `<section class="welcome"><div><p class="eyebrow">${esc(dateLabel(today))} · ${thisShift ? esc(PRESETS[thisShift.code].label) : 'MY NOTEBOOK'}</p><h1>${heading}</h1><p>何かあった日だけ、一行。<br class="mobile-break">なければ、何も書かなくて大丈夫。</p><button class="primary" data-action="incident" data-date="${today}">${icon('plus')}今日のひとことを残す</button></div><img class="welcome-ghost" src="./icon.svg" alt="" width="130" height="130"></section>
+  return `<section class="welcome"><div><p class="eyebrow">${esc(dateLabel(today))} · ${thisShift ? esc(PRESETS[thisShift.code].label) : 'MY NOTEBOOK'}</p><h1>${heading}</h1><p>何かあった日だけ、一行。<br class="mobile-break">なければ、何も書かなくて大丈夫。</p><button class="primary" data-action="incident" data-date="${today}">${icon('plus')}今日のひとことを残す</button></div><img class="welcome-ghost mascot-ghost" src="./ghost-mascot.webp" alt="" width="130" height="130"></section>
     <div class="workspace"><section class="calendar-card card"><div class="month-toolbar"><div class="month-title"><span class="eyebrow">${year}</span><h2>${month+1}<span>月の手帳</span></h2></div><div class="month-controls"><button class="icon-button" data-action="month" data-step="-1" aria-label="前の月">${icon('left')}</button><button class="text-button today-button" data-action="today">今日</button><button class="icon-button" data-action="month" data-step="1" aria-label="次の月">${icon('right')}</button></div></div>
     <div class="calendar-tools"><div class="legend"><span><i class="dot incident-dot"></i>事件</span><span><i class="dot event-dot"></i>私用</span></div><button class="text-button batch-toggle ${batch?'selected':''}" data-action="batch">${icon('edit')}${batch?'まとめて登録を終了':'シフトをまとめて登録'}</button></div>
     ${batch ? `<div class="batch-panel"><p>シフトを選んで、日付をタップ。</p><div class="preset-row">${Object.entries(PRESETS).map(([code,p])=>`<button class="preset ${p.color} ${code===batchCode?'chosen':''}" data-action="batch-code" data-code="${code}" aria-pressed="${code===batchCode}">${esc(p.label)}</button>`).join('')}</div></div>` : ''}

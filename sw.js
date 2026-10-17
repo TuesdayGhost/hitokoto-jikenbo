@@ -1,5 +1,5 @@
-const CACHE = 'jikenbo-shell-v4';
-const SHELL = ['./','./index.html','./style.css?v=20261017-3','./app.js?v=20261017-3','./model.js','./config.js','./icon.svg','./ghost-mascot.webp','./icon-192.png','./icon-512.png','./manifest.webmanifest'];
+const CACHE = 'jikenbo-shell-v5';
+const SHELL = ['./','./index.html','./style.css?v=20261017-4','./app.js?v=20261017-4','./model.js','./config.js','./icon.svg','./ghost-front.jpg','./ghost-flying.jpg','./icon-192.png','./icon-512.png','./manifest.webmanifest'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL.map(url=>new Request(new URL(url,self.registration.scope),{cache:'reload'})))));
 });
